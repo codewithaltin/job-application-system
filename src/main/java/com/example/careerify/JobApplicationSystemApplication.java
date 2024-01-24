@@ -1,4 +1,4 @@
-package com.jobapplication.jobapplicationsystem;
+package com.example.careerify;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
