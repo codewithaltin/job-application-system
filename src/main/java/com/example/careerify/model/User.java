@@ -3,12 +3,10 @@ package com.example.careerify.model;
 
 import io.micrometer.common.lang.NonNull;
 import jakarta.persistence.*;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
-
 import java.util.UUID;
 
-@EntityScan
-@Table
+@Entity
+@Table(name="User")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
