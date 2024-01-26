@@ -1,12 +1,15 @@
 package com.example.careerify.model;
-
-
-import io.micrometer.common.lang.NonNull;
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+
+import java.util.Date;
 import java.util.UUID;
 
-@Entity
-@Table(name="User")
+@MappedSuperclass
+@NoArgsConstructor
+@Data
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -18,5 +21,9 @@ public class User {
     private String lastName;
     @NonNull
     private String password;
+
+    @NonNull
+    private Date dateOfBirth;
+
 
 }
