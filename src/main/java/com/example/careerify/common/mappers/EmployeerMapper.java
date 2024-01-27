@@ -1,8 +1,6 @@
 package com.example.careerify.common.mappers;
 
-import com.example.careerify.common.dto.ApplicationManagerDTO;
 import com.example.careerify.common.dto.EmployeerDTO;
-import com.example.careerify.model.ApplicationManager;
 import com.example.careerify.model.Employeer;
 import org.mapstruct.InheritConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
