@@ -7,7 +7,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.mapstruct.InheritConfiguration;
-
 @Component
 public class ApplicantMapper {
 
@@ -23,5 +22,11 @@ public class ApplicantMapper {
     public  Applicant mapDTOToApplicant(ApplicantDTO applicantDTO) {
         return modelMapper.map(applicantDTO, Applicant.class);
     }
+
+    @InheritConfiguration
+    public void updateApplicantFromDTO(ApplicantDTO updateDTO, Applicant existingApplicant) {
+        modelMapper.map(updateDTO, existingApplicant);
+    }
+
 }
 
