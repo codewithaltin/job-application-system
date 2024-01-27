@@ -2,21 +2,21 @@ package com.example.careerify.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.Setter;
+import lombok.*;
+import jakarta.persistence.*;
+import java.util.List;
 
 @Entity
 @Table
 @Getter
 @Setter
-@Data
+@NoArgsConstructor
 public class Employeer extends User{
 
     @NonNull
     private String companyName;
 
-    public Employeer(){ super(); }
+    @OneToMany(mappedBy = "employeer", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<JobPosting> jobPostings;
 
 }

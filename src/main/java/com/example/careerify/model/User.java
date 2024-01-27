@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.UUID;
 
@@ -12,7 +13,7 @@ import java.util.UUID;
 @Data
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(updatable = false)
     private UUID id;
     @NonNull
@@ -23,7 +24,7 @@ public class User {
     private String password;
 
     @NonNull
-    private Date dateOfBirth;
+    private LocalDate dateOfBirth;
 
 
 }
