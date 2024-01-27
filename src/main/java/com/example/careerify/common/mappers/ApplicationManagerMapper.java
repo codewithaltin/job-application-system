@@ -22,7 +22,7 @@ public class ApplicationManagerMapper {
     }
 
     @InheritConfiguration
-    public  ApplicationManager mapDTOToApplicationManager(ApplicationManagerDTO applicationManagerDTO) {
+    public ApplicationManager mapDTOToApplicationManager(ApplicationManagerDTO applicationManagerDTO) {
         return modelMapper.map(applicationManagerDTO, ApplicationManager.class);
     }
 }
