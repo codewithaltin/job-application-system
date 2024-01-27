@@ -21,6 +21,16 @@ public class ApplicantController {
     public ApplicantController(ApplicantService applicantService) {
         this.applicantService = applicantService;
     }
+
+    @PostMapping
+    public ResponseEntity<Object> createApplicant(@RequestBody ApplicantDTO applicantDTO) {
+        try {
+            ApplicantDTO createdApplicant = applicantService.createApplicant(applicantDTO);
+            return new ResponseEntity<>(createdApplicant, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Error creating applicant: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
     @GetMapping("/{id}")
     public ResponseEntity<Object> getApplicantById(@PathVariable UUID id) {
         ApplicantDTO applicantDTO = applicantService.getApplicantById(id);

@@ -6,6 +6,7 @@ import com.example.careerify.model.Applicant;
 import com.example.careerify.repository.ApplicantRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Pageable;
@@ -20,6 +21,23 @@ public class ApplicantServiceImpl implements ApplicantService {
         this.applicantRepository = applicantRepository;
         this.applicantMapper = applicantMapper;
     }
+
+    @Override
+    public ApplicantDTO createApplicant(ApplicantDTO applicantDTO) {
+        try {
+            Applicant applicant = applicantMapper.mapDTOToApplicant(applicantDTO);
+
+            Applicant savedApplicant = applicantRepository.save(applicant);
+
+            return applicantMapper.mapApplicantToDTO(savedApplicant);
+        } catch (DataIntegrityViolationException e) {
+            throw new RuntimeException("Error creating applicant. Duplicate entry.", e);
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException("Error creating applicant. Illegal argument.", e);
+        }
+    }
+
+
     @Override
     public ApplicantDTO getApplicantById(UUID id) {
         Applicant applicant = applicantRepository.findById(id)
