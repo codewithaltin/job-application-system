@@ -3,6 +3,8 @@ package com.example.careerify.exception;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -18,7 +20,12 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Object> handleDuplicateEntryException(DuplicateEntryException e) {
         return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.BAD_REQUEST);
     }
-
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<Object> handleValidationException(MethodArgumentNotValidException ex) {
+        FieldError fieldError = ex.getBindingResult().getFieldError();
+        String errorMessage = fieldError != null ? fieldError.getDefaultMessage() : "Validation error";
+        return ResponseEntity.badRequest().body(errorMessage);
+    }
     @ExceptionHandler(IllegalOperationException.class)
     public ResponseEntity<Object> handleIllegalOperationException(IllegalOperationException e) {
         return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.BAD_REQUEST);

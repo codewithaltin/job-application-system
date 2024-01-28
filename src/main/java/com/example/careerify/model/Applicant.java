@@ -1,24 +1,25 @@
 package com.example.careerify.model;
 
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.Setter;
+import lombok.*;
 
+import java.util.List;
 @Entity
 @Table
 @Getter
 @Setter
-@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Applicant extends User {
 
     @NonNull
     private boolean status;
 
-    public Applicant() {
-        super();
-    }
+    @OneToMany(mappedBy = "applicant", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Application> applications;
+
 }

@@ -1,9 +1,7 @@
 package com.example.careerify.service;
 
-import com.example.careerify.common.dto.ApplicantDTO;
 import com.example.careerify.common.dto.EmployeerDTO;
 import com.example.careerify.common.mappers.EmployeerMapper;
-import com.example.careerify.model.Applicant;
 import com.example.careerify.model.Employeer;
 import com.example.careerify.repository.EmployeerRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -11,16 +9,18 @@ import jakarta.transaction.Transactional;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
+
+@Service
 public class EmployeerServiceImplementation implements EmployeerService{
 
 
     private EmployeerRepository employeerRepository;
     private EmployeerMapper employeerMapper;
-
-    public EmployeerServiceImplementation(EmployeerRepository employeerRepository, EmployeerMapper employeerMapper){
+    public EmployeerServiceImplementation(EmployeerRepository employeerRepository, EmployeerMapper employeerMapper) {
         this.employeerRepository = employeerRepository;
         this.employeerMapper = employeerMapper;
     }
@@ -69,4 +69,5 @@ public class EmployeerServiceImplementation implements EmployeerService{
 
         employeerRepository.save(existingEmployeer);
     }
+
 }
