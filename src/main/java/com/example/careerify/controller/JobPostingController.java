@@ -4,10 +4,12 @@ import com.example.careerify.common.dto.JobPostingDTO;
 import com.example.careerify.service.JobPostingService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -68,6 +70,30 @@ public class JobPostingController {
     @GetMapping("/employersJobPositions/{employerId}")
     public ResponseEntity<List<JobPostingDTO>> getAllJobPostingsByEmployerId(@PathVariable UUID employerId) {
         List<JobPostingDTO> jobPostings = jobPostingService.getAllJobPostingsByEmployerId(employerId);
+        return ResponseEntity.ok(jobPostings);
+    }
+    @GetMapping("/bytitle")
+    public ResponseEntity<List<JobPostingDTO>> getJobPostingsByTitle(@RequestParam String keyword) {
+        List<JobPostingDTO> jobPostings = jobPostingService.getJobPostingsByTitle(keyword);
+        return ResponseEntity.ok(jobPostings);
+    }
+
+    @GetMapping("/bysalary")
+    public ResponseEntity<List<JobPostingDTO>> getJobPostingsBySalaryGreaterThan(@RequestParam float salary) {
+        List<JobPostingDTO> jobPostings = jobPostingService.getJobPostingsBySalaryGreaterThan(salary);
+        return ResponseEntity.ok(jobPostings);
+    }
+
+    @GetMapping("/bypostdate")
+    public ResponseEntity<List<JobPostingDTO>> getJobPostingsByPostDateAfter(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate postDate) {
+        List<JobPostingDTO> jobPostings = jobPostingService.getJobPostingsByPostDateAfter(postDate);
+        return ResponseEntity.ok(jobPostings);
+    }
+
+
+    @GetMapping("/bycompanyname")
+    public ResponseEntity<List<JobPostingDTO>> getJobPostingsByCompanyName(@RequestParam String companyName) {
+        List<JobPostingDTO> jobPostings = jobPostingService.getJobPostingsByCompanyName(companyName);
         return ResponseEntity.ok(jobPostings);
     }
 }

@@ -34,4 +34,5 @@ public class JobPosting {
 
     private LocalDate endDate;
 
+
 }

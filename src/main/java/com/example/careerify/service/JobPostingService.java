@@ -4,6 +4,7 @@ import com.example.careerify.common.dto.JobPostingDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,4 +22,12 @@ public interface JobPostingService {
     Page<JobPostingDTO> getAllJobPostings(Pageable pageable);
 
     List<JobPostingDTO> getAllJobPostingsByEmployerId(UUID employerId);
+
+    List<JobPostingDTO> getJobPostingsByCompanyName(String companyName);
+    List<JobPostingDTO> getJobPostingsByPostDateAfter(LocalDate postDate);
+
+    List<JobPostingDTO> getJobPostingsBySalaryGreaterThan(float salary);
+
+    List<JobPostingDTO> getJobPostingsByTitle(String keyword);
+
 }

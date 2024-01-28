@@ -109,4 +109,37 @@ public class JobPostingServiceImpl implements JobPostingService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public List<JobPostingDTO> getJobPostingsByTitle(String keyword) {
+        List<JobPosting> jobPostings = jobPostingRepository.findByTitleContaining(keyword);
+        return jobPostings.stream()
+                .map(jobPostingMapper::mapJobPostingToDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<JobPostingDTO> getJobPostingsBySalaryGreaterThan(float salary) {
+        List<JobPosting> jobPostings = jobPostingRepository.findBySalaryGreaterThan(salary);
+        return jobPostings.stream()
+                .map(jobPostingMapper::mapJobPostingToDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<JobPostingDTO> getJobPostingsByPostDateAfter(LocalDate postDate) {
+        List<JobPosting> jobPostings = jobPostingRepository.findByPostDateAfter(postDate);
+        return jobPostings.stream()
+                .map(jobPostingMapper::mapJobPostingToDTO)
+                .collect(Collectors.toList());
+    }
+
+
+    @Override
+    public List<JobPostingDTO> getJobPostingsByCompanyName(String companyName) {
+        List<JobPosting> jobPostings = jobPostingRepository.findByEmployeerCompanyName(companyName);
+        return jobPostings.stream()
+                .map(jobPostingMapper::mapJobPostingToDTO)
+                .collect(Collectors.toList());
+    }
+
 }
