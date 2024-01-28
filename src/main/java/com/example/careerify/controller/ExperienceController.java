@@ -9,7 +9,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import javax.validation.Valid;
 import java.util.UUID;
 
 @RestController
@@ -29,6 +29,18 @@ public class ExperienceController {
             return new ResponseEntity<>(createdExperience, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>("Error creating experience: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("/create/{applicantId}")
+    public ResponseEntity<ExperienceDTO> createExperienceForApplicant(
+            @PathVariable UUID applicantId,
+            @Valid @RequestBody ExperienceDTO experienceDTO) {
+        try {
+            ExperienceDTO experienceDTO1 = experienceService.createExperienceForApplicant(applicantId, experienceDTO);
+            return ResponseEntity.status(HttpStatus.CREATED).body(experienceDTO1);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
     }
 
