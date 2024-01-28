@@ -2,6 +2,7 @@ package com.example.careerify.controller;
 
 import com.example.careerify.common.dto.ApplicationRequestDTO;
 import com.example.careerify.common.dto.ApplicationResponseDTO;
+import com.example.careerify.common.enums.ApplicationStatus;
 import com.example.careerify.service.ApplicationService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -58,4 +59,61 @@ public class ApplicationController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/status/{status}/applicant/{applicantId}")
+    public ResponseEntity<List<ApplicationResponseDTO>> getApplicationsByStatusAndApplicant(
+            @PathVariable ApplicationStatus status, @PathVariable UUID applicantId) {
+        List<ApplicationResponseDTO> applications = applicationService.getApplicationsByStatusAndApplicant(status, applicantId);
+        return ResponseEntity.ok(applications);
+    }
+
+    @GetMapping("/jobListing/{jobListingId}")
+    public ResponseEntity<List<ApplicationResponseDTO>> getApplicationsByJobListing(
+            @PathVariable Long jobListingId) {
+        List<ApplicationResponseDTO> applications = applicationService.getApplicationsByJobListing(jobListingId);
+        return ResponseEntity.ok(applications);
+    }
+
+    @GetMapping("/top/status/{status}/jobListing/{jobListingId}/applicant/{applicantId}")
+    public ResponseEntity<ApplicationResponseDTO> getTopApplicationByStatusAndJobListingAndApplicant(
+            @PathVariable ApplicationStatus status, @PathVariable Long jobListingId, @PathVariable UUID applicantId) {
+        ApplicationResponseDTO application = applicationService
+                .getTopApplicationByStatusAndJobListingAndApplicant(status, jobListingId, applicantId);
+        return ResponseEntity.ok(application);
+    }
+
+    @GetMapping("/status/{status}")
+    public ResponseEntity<List<ApplicationResponseDTO>> getApplicationsByStatus(
+            @PathVariable ApplicationStatus status) {
+        List<ApplicationResponseDTO> applications = applicationService.getApplicationsByStatus(status);
+        return ResponseEntity.ok(applications);
+    }
+
+    @GetMapping("/count/status/{status}/jobListing/{jobListingId}")
+    public ResponseEntity<Long> countApplicationsByStatusAndJobListing(
+            @PathVariable ApplicationStatus status, @PathVariable Long jobListingId) {
+        long count = applicationService.countApplicationsByStatusAndJobListing(status, jobListingId);
+        return ResponseEntity.ok(count);
+    }
+
+    @GetMapping("/count/jobListing/{jobListingId}/applicant/{applicantId}")
+    public ResponseEntity<Long> countApplicationsByJobListingAndApplicant(
+            @PathVariable Long jobListingId, @PathVariable UUID applicantId) {
+        long count = applicationService.countApplicationsByJobListingAndApplicant(jobListingId, applicantId);
+        return ResponseEntity.ok(count);
+    }
+
+    @GetMapping("/jobListing/{jobListingId}/applicant/{applicantId}")
+    public ResponseEntity<List<ApplicationResponseDTO>> getApplicationsByJobListingAndApplicant(
+            @PathVariable Long jobListingId, @PathVariable UUID applicantId) {
+        List<ApplicationResponseDTO> applications = applicationService
+                .getApplicationsByJobListingAndApplicant(jobListingId, applicantId);
+        return ResponseEntity.ok(applications);
+    }
+
+    @PatchMapping("/{applicationId}/updateStatus/{newStatus}")
+    public ResponseEntity<Void> updateApplicationStatus(
+            @PathVariable Long applicationId, @PathVariable ApplicationStatus newStatus) {
+        applicationService.updateApplicationStatus(applicationId, newStatus);
+        return ResponseEntity.ok().build();
+    }
 }

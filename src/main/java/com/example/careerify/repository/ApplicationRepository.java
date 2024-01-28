@@ -11,12 +11,18 @@ import java.util.List;
 
 @Repository
 public interface ApplicationRepository extends JpaRepository<Application, Long> {
-    List<Application> findByStatusAndJobListingAndApplicant(ApplicationStatus status, JobPosting jobListing, Applicant applicant);
     List<Application> findByStatusAndApplicant(ApplicationStatus status, Applicant applicant);
+
     List<Application> findByJobListing(JobPosting jobListing);
+
     Application findTopByStatusAndJobListingAndApplicant(ApplicationStatus status, JobPosting jobListing, Applicant applicant);
+
     List<Application> findByStatus(ApplicationStatus status);
+
     long countByStatusAndJobListing(ApplicationStatus status, JobPosting jobListing);
+
     long countByJobListingAndApplicant(JobPosting jobListing, Applicant applicant);
+
     List<Application> findByJobListingAndApplicant(JobPosting jobListing, Applicant applicant);
+
 }
