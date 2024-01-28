@@ -1,14 +1,12 @@
 package com.example.careerify.model;
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.NonNull;
-
 import java.util.Date;
 import java.util.UUID;
 
 @MappedSuperclass
-@NoArgsConstructor
+
 @Data
 public class User {
     @Id
@@ -25,5 +23,8 @@ public class User {
     @NonNull
     private Date dateOfBirth;
 
+    public User(){
+
+    }
 
 }
