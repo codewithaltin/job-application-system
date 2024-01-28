@@ -94,7 +94,7 @@ public class ApplicationServiceImpl implements ApplicationService {
 
     @Override
     public List<ApplicationResponseDTO> getApplicationsByJobListing(Long jobListingId) {
-        JobPosting jobListing = getJobListingById(jobListingId);
+        JobPosting jobListing = getJobPostingById(jobListingId);
         List<Application> applications = applicationRepository.findByJobListing(jobListing);
         return applicationMapper.mapApplicationsToResponseDTOs(applications);
     }
@@ -103,7 +103,7 @@ public class ApplicationServiceImpl implements ApplicationService {
     public ApplicationResponseDTO getTopApplicationByStatusAndJobListingAndApplicant(
             ApplicationStatus status, Long jobListingId, UUID applicantId) {
         Applicant applicant = getApplicantById(applicantId);
-        JobPosting jobListing = getJobListingById(jobListingId);
+        JobPosting jobListing = getJobPostingById(jobListingId);
         Application application = applicationRepository.findTopByStatusAndJobListingAndApplicant(status, jobListing, applicant);
         return applicationMapper.mapApplicationToResponseDTO(application);
     }
@@ -116,20 +116,20 @@ public class ApplicationServiceImpl implements ApplicationService {
 
     @Override
     public long countApplicationsByStatusAndJobListing(ApplicationStatus status, Long jobListingId) {
-        JobPosting jobListing = getJobListingById(jobListingId);
+        JobPosting jobListing = getJobPostingById(jobListingId);
         return applicationRepository.countByStatusAndJobListing(status, jobListing);
     }
 
     @Override
     public long countApplicationsByJobListingAndApplicant(Long jobListingId, UUID applicantId) {
         Applicant applicant = getApplicantById(applicantId);
-        JobPosting jobListing = getJobListingById(jobListingId);
+        JobPosting jobListing = getJobPostingById(jobListingId);
         return applicationRepository.countByJobListingAndApplicant(jobListing, applicant);
     }
     @Override
     public List<ApplicationResponseDTO> getApplicationsByJobListingAndApplicant(Long jobListingId, UUID applicantId) {
         Applicant applicant = getApplicantById(applicantId);
-        JobPosting jobListing = getJobListingById(jobListingId);
+        JobPosting jobListing = getJobPostingById(jobListingId);
         List<Application> applications = applicationRepository.findByJobListingAndApplicant(jobListing, applicant);
         return applicationMapper.mapApplicationsToResponseDTOs(applications);
     }
@@ -148,10 +148,7 @@ public class ApplicationServiceImpl implements ApplicationService {
     }
 
     //helper methods
-    private JobPosting getJobListingById(Long jobListingId) {
-        return jobPostingRepository.findById(jobListingId)
-                .orElseThrow(() -> new RuntimeException("Job Listing not found with ID: " + jobListingId));
-    }
+
     private Applicant getApplicantById(UUID applicantId) {
         return applicantRepository.findById(applicantId)
                 .orElseThrow(() -> new RuntimeException("Applicant not found with ID: " + applicantId));

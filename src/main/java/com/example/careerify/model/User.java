@@ -2,6 +2,8 @@ package com.example.careerify.model;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NonNull;
+
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.UUID;
 
@@ -21,7 +23,7 @@ public class User {
     private String password;
 
     @NonNull
-    private Date dateOfBirth;
+    private LocalDate dateOfBirth;
 
     public User(){
 

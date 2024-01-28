@@ -33,6 +33,10 @@ public class Education {
 
     private String grade;
 
+    @ManyToOne
+    @JoinColumn(name = "applicant_id", nullable = false)
+    private Applicant applicant;
+
     public Education(UUID id, String fieldOfStudy, String school, Date endDate, Date startDate, String location, String grade) {
         this.id = id;
         this.fieldOfStudy = fieldOfStudy;

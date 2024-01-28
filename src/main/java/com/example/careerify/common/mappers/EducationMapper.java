@@ -1,7 +1,5 @@
 package com.example.careerify.common.mappers;
 
-import com.example.careerify.common.dto.ApplicantDTO;
-import com.example.careerify.model.Applicant;
 import com.example.careerify.model.Education;
 import org.mapstruct.InheritConfiguration;
 import com.example.careerify.common.dto.EducationDTO;

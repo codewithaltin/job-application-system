@@ -1,6 +1,4 @@
 package com.example.careerify.model;
-
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
@@ -16,9 +14,6 @@ import java.util.List;
 @AllArgsConstructor
 public class Applicant extends User {
 
-    @NonNull
-    private boolean status;
-
     @OneToMany(mappedBy = "applicant", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Application> applications;
 
@@ -27,5 +22,8 @@ public class Applicant extends User {
 
     @OneToMany(mappedBy = "applicant", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Skill> skills;
+
+    @OneToMany(mappedBy = "applicant", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Education> educations;
 
 }

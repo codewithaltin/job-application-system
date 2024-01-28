@@ -1,6 +1,7 @@
 package com.example.careerify.service;
 
-import com.example.careerify.common.dto.ApplicantDTO;
+import com.example.careerify.common.dto.ApplicantRequestDTO;
+import com.example.careerify.common.dto.ApplicantResponseDTO;
 import com.example.careerify.common.mappers.ApplicantMapper;
 import com.example.careerify.model.Applicant;
 import com.example.careerify.repository.ApplicantRepository;
@@ -23,9 +24,9 @@ public class ApplicantServiceImpl implements ApplicantService {
     }
 
     @Override
-    public ApplicantDTO createApplicant(ApplicantDTO applicantDTO) {
+    public ApplicantResponseDTO createApplicant(ApplicantRequestDTO applicantRequestDTO) {
         try {
-            Applicant applicant = applicantMapper.mapDTOToApplicant(applicantDTO);
+            Applicant applicant = applicantMapper.mapDTOToApplicant(applicantRequestDTO);
 
             Applicant savedApplicant = applicantRepository.save(applicant);
 
@@ -39,14 +40,14 @@ public class ApplicantServiceImpl implements ApplicantService {
 
 
     @Override
-    public ApplicantDTO getApplicantById(UUID id) {
+    public ApplicantResponseDTO getApplicantById(UUID id) {
         Applicant applicant = applicantRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Applicant not found with ID: " + id));
         return applicantMapper.mapApplicantToDTO(applicant);
     }
 
     @Override
-    public Page<ApplicantDTO> getAllApplicants(Pageable pageable) {
+    public Page<ApplicantResponseDTO> getAllApplicants(Pageable pageable) {
         Page<Applicant> applicants = applicantRepository.findAll(pageable);
         return applicants.map(applicantMapper::mapApplicantToDTO);
     }
@@ -59,7 +60,7 @@ public class ApplicantServiceImpl implements ApplicantService {
     }
     @Override
     @Transactional
-    public void updateApplicant(UUID id, ApplicantDTO updateDTO) throws EntityNotFoundException {
+    public void updateApplicant(UUID id, ApplicantRequestDTO updateDTO) throws EntityNotFoundException {
         Applicant existingApplicant = applicantRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Applicant not found with ID: " + id));
 

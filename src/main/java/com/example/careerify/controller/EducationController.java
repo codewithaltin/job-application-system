@@ -1,8 +1,7 @@
 package com.example.careerify.controller;
 
-import com.example.careerify.common.dto.ApplicantDTO;
 import com.example.careerify.common.dto.EducationDTO;
-import com.example.careerify.service.ApplicantService;
+import com.example.careerify.common.dto.JobPostingResponseDTO;
 import com.example.careerify.service.EducationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -10,8 +9,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.example.careerify.service.EducationService;
 
+import javax.validation.Valid;
 import java.util.UUID;
 
 @RestController
@@ -34,6 +33,19 @@ public class EducationController {
             return new ResponseEntity<>("Error creating Education: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @PostMapping("/create/{applicantId}")
+    public ResponseEntity<EducationDTO> createEducationForApplicant(
+            @PathVariable UUID applicantId,
+            @Valid @RequestBody EducationDTO educationDTO) {
+        try {
+            EducationDTO educationDTO1 = educationService.createEducationForApplicant(applicantId, educationDTO);
+            return ResponseEntity.status(HttpStatus.CREATED).body(educationDTO1);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+    }
+
     @GetMapping
     public ResponseEntity<Page<EducationDTO>> getAllEducations(
             @RequestParam(defaultValue = "0") int page,
