@@ -1,6 +1,6 @@
 package com.example.careerify.service;
 
-import com.example.careerify.common.dto.JobPostingDTO;
+import com.example.careerify.common.dto.JobPostingResponseDTO;
 import com.example.careerify.common.mappers.JobPostingMapper;
 import com.example.careerify.model.Employeer;
 import com.example.careerify.model.JobPosting;
@@ -8,13 +8,11 @@ import com.example.careerify.repository.EmployeerRepository;
 import com.example.careerify.repository.JobPostingRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -33,14 +31,14 @@ public class JobPostingServiceImpl implements JobPostingService {
         this.employeerRepository = employeerRepository;
     }
     @Override
-    public Page<JobPostingDTO> getAllJobPostings(Pageable pageable) {
+    public Page<JobPostingResponseDTO> getAllJobPostings(Pageable pageable) {
         Page<JobPosting> jobPostings = jobPostingRepository.findAll(pageable);
         return jobPostings.map(jobPostingMapper::mapJobPostingToDTO);
     }
     @Override
-    public JobPostingDTO createJobPosting(JobPostingDTO jobPostingDTO) {
+    public JobPostingResponseDTO createJobPosting(JobPostingResponseDTO jobPostingResponseDTO) {
         try {
-            JobPosting jobPosting = jobPostingMapper.mapDTOToJobPosting(jobPostingDTO);
+            JobPosting jobPosting = jobPostingMapper.mapDTOToJobPosting(jobPostingResponseDTO);
             jobPosting.setPostDate(LocalDate.now());
 
             JobPosting savedJobPosting = jobPostingRepository.save(jobPosting);
@@ -53,7 +51,7 @@ public class JobPostingServiceImpl implements JobPostingService {
 
 
     @Override
-    public JobPostingDTO getJobPostingById(Long jobPostingId) {
+    public JobPostingResponseDTO getJobPostingById(Long jobPostingId) {
         Optional<JobPosting> jobPostingOptional = jobPostingRepository.findById(jobPostingId);
         if (jobPostingOptional.isPresent()) {
             return jobPostingMapper.mapJobPostingToDTO(jobPostingOptional.get());
@@ -63,11 +61,11 @@ public class JobPostingServiceImpl implements JobPostingService {
     }
 
     @Override
-    public void updateJobPosting(Long jobPostingId, JobPostingDTO jobPostingDTO) {
+    public void updateJobPosting(Long jobPostingId, JobPostingResponseDTO jobPostingResponseDTO) {
         Optional<JobPosting> jobPostingOptional = jobPostingRepository.findById(jobPostingId);
         if (jobPostingOptional.isPresent()) {
             JobPosting existingJobPosting = jobPostingOptional.get();
-            jobPostingMapper.updateJobPostingFromDTO(jobPostingDTO, existingJobPosting);
+            jobPostingMapper.updateJobPostingFromDTO(jobPostingResponseDTO, existingJobPosting);
             jobPostingRepository.save(existingJobPosting);
         } else {
             throw new RuntimeException("Job Posting not found with ID: " + jobPostingId);
@@ -81,12 +79,12 @@ public class JobPostingServiceImpl implements JobPostingService {
     }
     @Transactional
     @Override
-    public JobPostingDTO createJobPostingForEmployeer(UUID employeerId, JobPostingDTO jobPostingDTO) {
+    public JobPostingResponseDTO createJobPostingForEmployeer(UUID employeerId, JobPostingResponseDTO jobPostingResponseDTO) {
         try {
             Employeer employeer = employeerRepository.findById(employeerId)
                     .orElseThrow(() -> new EntityNotFoundException("Employeer not found with ID: " + employeerId));
 
-            JobPosting jobPosting = jobPostingMapper.mapDTOToJobPosting(jobPostingDTO);
+            JobPosting jobPosting = jobPostingMapper.mapDTOToJobPosting(jobPostingResponseDTO);
             jobPosting.setPostDate(LocalDate.now());
             jobPosting.setEmployeer(employeer);
 
@@ -99,7 +97,7 @@ public class JobPostingServiceImpl implements JobPostingService {
     }
 
     @Override
-    public List<JobPostingDTO> getAllJobPostingsByEmployerId(UUID employerId) {
+    public List<JobPostingResponseDTO> getAllJobPostingsByEmployerId(UUID employerId) {
         Employeer employer = employeerRepository.findById(employerId)
                 .orElseThrow(() -> new EntityNotFoundException("Employeer not found with ID: " + employerId));
 
@@ -110,7 +108,7 @@ public class JobPostingServiceImpl implements JobPostingService {
     }
 
     @Override
-    public List<JobPostingDTO> getJobPostingsByTitle(String keyword) {
+    public List<JobPostingResponseDTO> getJobPostingsByTitle(String keyword) {
         List<JobPosting> jobPostings = jobPostingRepository.findByTitleContaining(keyword);
         return jobPostings.stream()
                 .map(jobPostingMapper::mapJobPostingToDTO)
@@ -118,7 +116,7 @@ public class JobPostingServiceImpl implements JobPostingService {
     }
 
     @Override
-    public List<JobPostingDTO> getJobPostingsBySalaryGreaterThan(float salary) {
+    public List<JobPostingResponseDTO> getJobPostingsBySalaryGreaterThan(float salary) {
         List<JobPosting> jobPostings = jobPostingRepository.findBySalaryGreaterThan(salary);
         return jobPostings.stream()
                 .map(jobPostingMapper::mapJobPostingToDTO)
@@ -126,7 +124,7 @@ public class JobPostingServiceImpl implements JobPostingService {
     }
 
     @Override
-    public List<JobPostingDTO> getJobPostingsByPostDateAfter(LocalDate postDate) {
+    public List<JobPostingResponseDTO> getJobPostingsByPostDateAfter(LocalDate postDate) {
         List<JobPosting> jobPostings = jobPostingRepository.findByPostDateAfter(postDate);
         return jobPostings.stream()
                 .map(jobPostingMapper::mapJobPostingToDTO)
@@ -135,7 +133,7 @@ public class JobPostingServiceImpl implements JobPostingService {
 
 
     @Override
-    public List<JobPostingDTO> getJobPostingsByCompanyName(String companyName) {
+    public List<JobPostingResponseDTO> getJobPostingsByCompanyName(String companyName) {
         List<JobPosting> jobPostings = jobPostingRepository.findByEmployeerCompanyName(companyName);
         return jobPostings.stream()
                 .map(jobPostingMapper::mapJobPostingToDTO)

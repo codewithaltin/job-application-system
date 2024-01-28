@@ -5,10 +5,10 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.constraints.Min;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
 
+import java.util.List;
 @Entity
 @Table
 @Getter
@@ -30,9 +30,15 @@ public class JobPosting {
     @JoinColumn(name = "employeer_id", nullable = false)
     private Employeer employeer;
 
+    @OneToMany(mappedBy = "jobListing", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Application> applications;
+
+
     private LocalDate postDate;
 
     private LocalDate endDate;
+
+    private int vacancies;
 
 
 }

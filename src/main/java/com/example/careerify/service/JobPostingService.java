@@ -1,6 +1,6 @@
 package com.example.careerify.service;
 
-import com.example.careerify.common.dto.JobPostingDTO;
+import com.example.careerify.common.dto.JobPostingResponseDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -10,24 +10,24 @@ import java.util.UUID;
 
 public interface JobPostingService {
 
-    JobPostingDTO createJobPosting(JobPostingDTO jobPostingDTO);
-    JobPostingDTO createJobPostingForEmployeer(UUID employeerId, JobPostingDTO jobPostingDTO);
+    JobPostingResponseDTO createJobPosting(JobPostingResponseDTO jobPostingResponseDTO);
+    JobPostingResponseDTO createJobPostingForEmployeer(UUID employeerId, JobPostingResponseDTO jobPostingResponseDTO);
 
-    JobPostingDTO getJobPostingById(Long jobPostingId);
+    JobPostingResponseDTO getJobPostingById(Long jobPostingId);
 
-    void updateJobPosting(Long jobPostingId, JobPostingDTO jobPostingDTO);
+    void updateJobPosting(Long jobPostingId, JobPostingResponseDTO jobPostingResponseDTO);
 
     void deleteJobPosting(Long jobPostingId);
 
-    Page<JobPostingDTO> getAllJobPostings(Pageable pageable);
+    Page<JobPostingResponseDTO> getAllJobPostings(Pageable pageable);
 
-    List<JobPostingDTO> getAllJobPostingsByEmployerId(UUID employerId);
+    List<JobPostingResponseDTO> getAllJobPostingsByEmployerId(UUID employerId);
 
-    List<JobPostingDTO> getJobPostingsByCompanyName(String companyName);
-    List<JobPostingDTO> getJobPostingsByPostDateAfter(LocalDate postDate);
+    List<JobPostingResponseDTO> getJobPostingsByCompanyName(String companyName);
+    List<JobPostingResponseDTO> getJobPostingsByPostDateAfter(LocalDate postDate);
 
-    List<JobPostingDTO> getJobPostingsBySalaryGreaterThan(float salary);
+    List<JobPostingResponseDTO> getJobPostingsBySalaryGreaterThan(float salary);
 
-    List<JobPostingDTO> getJobPostingsByTitle(String keyword);
+    List<JobPostingResponseDTO> getJobPostingsByTitle(String keyword);
 
 }

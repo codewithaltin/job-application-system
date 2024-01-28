@@ -3,19 +3,15 @@ package com.example.careerify.common.dto;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.time.LocalDate;
-import java.util.UUID;
 
 @Getter
 @Setter
-public class JobPostingDTO {
-
-    @NotNull(message = "ID cannot be null")
-    private Long id;
-
+public class JobPostingRequestDTO {
     @NotBlank(message = "Title cannot be blank")
     private String title;
 
@@ -26,12 +22,15 @@ public class JobPostingDTO {
     private float salary;
 
     @NotNull(message = "Employer ID cannot be null")
-    private UUID employeerId;
+    private Long employeerId;
 
     @NotNull(message = "Post date cannot be null")
     private LocalDate postDate;
 
     @NotNull(message = "End date cannot be null")
     private LocalDate endDate;
+
+    @Min(value = 0, message = "Vacancies must be a non-negative value")
+    private int vacancies;
 
 }

@@ -1,25 +1,16 @@
 package com.example.careerify.service;
 
-import com.example.careerify.common.dto.ApplicantDTO;
 import com.example.careerify.common.dto.EmployeerDTO;
-import com.example.careerify.common.dto.JobPostingDTO;
 import com.example.careerify.common.mappers.EmployeerMapper;
-import com.example.careerify.common.mappers.JobPostingMapper;
-import com.example.careerify.model.Applicant;
 import com.example.careerify.model.Employeer;
-import com.example.careerify.model.JobPosting;
 import com.example.careerify.repository.EmployeerRepository;
-import com.example.careerify.repository.JobPostingRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 

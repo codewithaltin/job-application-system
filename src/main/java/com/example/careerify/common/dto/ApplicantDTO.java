@@ -9,6 +9,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -33,4 +34,7 @@ public class ApplicantDTO {
     private LocalDate dateOfBirth;
 
     private boolean status;
+
+    private List<ApplicationResponseDTO> applications;
+
 }

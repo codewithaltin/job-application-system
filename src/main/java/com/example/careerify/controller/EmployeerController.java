@@ -1,11 +1,7 @@
     package com.example.careerify.controller;
 
-    import com.example.careerify.common.dto.ApplicantDTO;
     import com.example.careerify.common.dto.EmployeerDTO;
-    import com.example.careerify.common.dto.JobPostingDTO;
-    import com.example.careerify.service.ApplicantService;
     import com.example.careerify.service.EmployeerService;
-    import jakarta.persistence.EntityNotFoundException;
     import org.springframework.beans.factory.annotation.Autowired;
     import org.springframework.data.domain.Page;
     import org.springframework.data.domain.PageRequest;
