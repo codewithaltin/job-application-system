@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -29,4 +30,9 @@ public class Experience {
 
     @NonNull
     private LocalDate endDate;
+
+    @ManyToOne
+    @JoinColumn(name = "applicant_id", nullable = false)
+    private Applicant applicant;
+
 }

@@ -18,4 +18,8 @@ public class Skill {
     private UUID id;
     @NonNull
     private String name;
+
+    @ManyToOne
+    @JoinColumn(name = "applicant_id", nullable = false)
+    private Applicant applicant;
 }

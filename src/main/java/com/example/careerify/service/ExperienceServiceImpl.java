@@ -5,7 +5,6 @@ import com.example.careerify.common.mappers.ExperienceMapper;
 import com.example.careerify.model.Experience;
 import com.example.careerify.repository.ExperienceRepository;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.transaction.Transactional;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,11 +12,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 @Service
-public class ExperienceServiceImplementation implements ExperienceService {
+public class ExperienceServiceImpl implements ExperienceService {
     private ExperienceRepository experienceRepository;
     private ExperienceMapper experienceMapper;
 
-    public ExperienceServiceImplementation(ExperienceRepository experienceRepository, ExperienceMapper experienceMapper){
+    public ExperienceServiceImpl(ExperienceRepository experienceRepository, ExperienceMapper experienceMapper){
         this.experienceRepository = experienceRepository;
         this.experienceMapper = experienceMapper;
     }
