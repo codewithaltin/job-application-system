@@ -1,6 +1,7 @@
 package com.example.careerify.common.mappers;
 
-import com.example.careerify.common.dto.ApplicantDTO;
+import com.example.careerify.common.dto.ApplicantRequestDTO;
+import com.example.careerify.common.dto.ApplicantResponseDTO;
 import com.example.careerify.model.Applicant;
 //import org.modelmapper.ModelMapper;
 import org.modelmapper.ModelMapper;
@@ -14,17 +15,17 @@ public class ApplicantMapper {
     private ModelMapper modelMapper ;
 
     @InheritConfiguration
-    public ApplicantDTO mapApplicantToDTO(Applicant applicant) {
-        return modelMapper.map(applicant, ApplicantDTO.class);
+    public ApplicantResponseDTO mapApplicantToDTO(Applicant applicant) {
+        return modelMapper.map(applicant, ApplicantResponseDTO.class);
     }
 
     @InheritConfiguration
-    public  Applicant mapDTOToApplicant(ApplicantDTO applicantDTO) {
-        return modelMapper.map(applicantDTO, Applicant.class);
+    public  Applicant mapDTOToApplicant(ApplicantRequestDTO applicantRequestDTO) {
+        return modelMapper.map(applicantRequestDTO, Applicant.class);
     }
 
     @InheritConfiguration
-    public void updateApplicantFromDTO(ApplicantDTO updateDTO, Applicant existingApplicant) {
+    public void updateApplicantFromDTO(ApplicantRequestDTO updateDTO, Applicant existingApplicant) {
         modelMapper.map(updateDTO, existingApplicant);
     }
 
