@@ -27,8 +27,6 @@ public interface ApplicationService {
 
     List<ApplicationResponseDTO> getApplicationsByJobListing(Long jobListingId);
 
-    ApplicationResponseDTO getTopApplicationByStatusAndJobListingAndApplicant(
-            ApplicationStatus status, Long jobListingId, UUID applicantId);
 
     List<ApplicationResponseDTO> getApplicationsByStatus(ApplicationStatus status);
 

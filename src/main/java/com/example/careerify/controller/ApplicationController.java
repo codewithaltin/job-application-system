@@ -73,14 +73,6 @@ public class ApplicationController {
         return ResponseEntity.ok(applications);
     }
 
-    @GetMapping("/top/status/{status}/jobListing/{jobListingId}/applicant/{applicantId}")
-    public ResponseEntity<ApplicationResponseDTO> getTopApplicationByStatusAndJobListingAndApplicant(
-            @PathVariable ApplicationStatus status, @PathVariable Long jobListingId, @PathVariable UUID applicantId) {
-        ApplicationResponseDTO application = applicationService
-                .getTopApplicationByStatusAndJobListingAndApplicant(status, jobListingId, applicantId);
-        return ResponseEntity.ok(application);
-    }
-
     @GetMapping("/status/{status}")
     public ResponseEntity<List<ApplicationResponseDTO>> getApplicationsByStatus(
             @PathVariable ApplicationStatus status) {

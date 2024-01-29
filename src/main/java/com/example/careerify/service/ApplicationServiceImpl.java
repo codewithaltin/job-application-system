@@ -98,16 +98,6 @@ public class ApplicationServiceImpl implements ApplicationService {
         List<Application> applications = applicationRepository.findByJobListing(jobListing);
         return applicationMapper.mapApplicationsToResponseDTOs(applications);
     }
-
-    @Override
-    public ApplicationResponseDTO getTopApplicationByStatusAndJobListingAndApplicant(
-            ApplicationStatus status, Long jobListingId, UUID applicantId) {
-        Applicant applicant = getApplicantById(applicantId);
-        JobPosting jobListing = getJobPostingById(jobListingId);
-        Application application = applicationRepository.findTopByStatusAndJobListingAndApplicant(status, jobListing, applicant);
-        return applicationMapper.mapApplicationToResponseDTO(application);
-    }
-
     @Override
     public List<ApplicationResponseDTO> getApplicationsByStatus(ApplicationStatus status) {
         List<Application> applications = applicationRepository.findByStatus(status);
