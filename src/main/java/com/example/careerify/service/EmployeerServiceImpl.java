@@ -15,12 +15,12 @@ import java.util.UUID;
 
 
 @Service
-public class EmployeerServiceImplementation implements EmployeerService{
+public class EmployeerServiceImpl implements EmployeerService{
 
 
     private EmployeerRepository employeerRepository;
     private EmployeerMapper employeerMapper;
-    public EmployeerServiceImplementation(EmployeerRepository employeerRepository, EmployeerMapper employeerMapper) {
+    public EmployeerServiceImpl(EmployeerRepository employeerRepository, EmployeerMapper employeerMapper) {
         this.employeerRepository = employeerRepository;
         this.employeerMapper = employeerMapper;
     }

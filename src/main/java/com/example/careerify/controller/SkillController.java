@@ -1,4 +1,5 @@
 package com.example.careerify.controller;
+import com.example.careerify.common.dto.ExperienceDTO;
 import com.example.careerify.common.dto.SkillDTO;
 import com.example.careerify.service.SkillService;
 import jakarta.persistence.EntityNotFoundException;
@@ -9,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.UUID;
 
 @RestController
@@ -30,6 +32,19 @@ public class SkillController {
             return new ResponseEntity<>("Error creating skill: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @PostMapping("/create/{applicantId}")
+    public ResponseEntity<SkillDTO> createSkillForApplicant(
+            @PathVariable UUID applicantId,
+            @Valid @RequestBody SkillDTO skillDTO) {
+        try {
+            SkillDTO skillDTO1 = skillService.createSkillForApplicant(applicantId, skillDTO);
+            return ResponseEntity.status(HttpStatus.CREATED).body(skillDTO1);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+    }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<Object> getSkillById(@PathVariable UUID id) {
