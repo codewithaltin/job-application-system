@@ -9,6 +9,7 @@ import org.modelmapper.ModelMapper;
 
 @Component
 public class SkillMapper {
+
     @Autowired
     private ModelMapper modelMapper ;
 
@@ -21,5 +22,10 @@ public class SkillMapper {
     public  Skill mapDTOToSkill(SkillDTO skillDTO) {
         return modelMapper.map(skillDTO, Skill.class);
     }
+
+    public void updateSkillFromDTO(SkillDTO updateDTO, Skill skill) {
+        modelMapper.map(updateDTO, skill);
+    }
+
 
 }

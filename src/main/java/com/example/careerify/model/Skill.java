@@ -16,6 +16,7 @@ public class Skill {
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(updatable = false)
     private UUID id;
+
     @NonNull
     private String name;
 

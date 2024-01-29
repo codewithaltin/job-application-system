@@ -1,13 +1,18 @@
 package com.example.careerify.service;
 import com.example.careerify.common.dto.SkillDTO;
 import com.example.careerify.common.mappers.SkillMapper;
+import com.example.careerify.model.Applicant;
+import com.example.careerify.model.Education;
+import com.example.careerify.model.Experience;
 import com.example.careerify.model.Skill;
+import com.example.careerify.repository.ApplicantRepository;
 import com.example.careerify.repository.SkillRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -15,6 +20,7 @@ import java.util.UUID;
 public class SkillServiceImpl implements SkillService {
     private SkillRepository skillRepository;
     private SkillMapper skillMapper;
+    private ApplicantRepository applicantRepository;
 
     public SkillServiceImpl(SkillRepository skillRepository, SkillMapper skillMapper){
         this.skillRepository = skillRepository;
@@ -55,5 +61,22 @@ public class SkillServiceImpl implements SkillService {
                 .orElseThrow(() -> new EntityNotFoundException("Skill not found with ID: " + skillId));
 
         skillRepository.delete(existingSkill);
+    }
+
+    @Override
+    public SkillDTO createSkillForApplicant(UUID applicantId, SkillDTO skillDTO) {
+        try {
+            Applicant applicant = applicantRepository.findById(applicantId)
+                    .orElseThrow(() -> new EntityNotFoundException("Applicant not found with ID: " + applicantId));
+
+            Skill skill = skillMapper.mapDTOToSkill(skillDTO);
+            skill.setApplicant(applicant);
+
+            Skill skill1 = skillRepository.save(skill);
+
+            return skillMapper.mapSkillToDTO(skill1);
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException("Error creating skill. Illegal argument.", e);
+        }
     }
 }
