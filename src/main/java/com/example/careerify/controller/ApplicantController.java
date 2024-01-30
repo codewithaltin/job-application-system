@@ -8,12 +8,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/applicants")
+@RequestMapping("api/v1/applicants")
 public class ApplicantController {
 
     private final ApplicantService applicantService;
@@ -21,6 +22,7 @@ public class ApplicantController {
     public ApplicantController(ApplicantService applicantService) {
         this.applicantService = applicantService;
     }
+
 
     @PostMapping
     public ResponseEntity<Object> createApplicant(@RequestBody ApplicantRequestDTO applicantRequestDTO) {
@@ -36,6 +38,8 @@ public class ApplicantController {
         ApplicantResponseDTO applicantRequestDTO = applicantService.getApplicantById(id);
         return new ResponseEntity<>(applicantRequestDTO, HttpStatus.OK);
     }
+
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     public ResponseEntity<Page<ApplicantResponseDTO>> getAllApplicants(
             @RequestParam(defaultValue = "0") int page,
