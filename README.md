@@ -1,16 +1,43 @@
-## Careerify: A Job Application System.
-### Getting Started
-Our project's main goal is to build a job application system that simplifies the process for both applicants and recruiters. 
+# Careerify: A Job Application System.
 
-### Built With
-This project is being created with several different technologies, and to make the work more efficient we also used different tools and design patterns. Some of them are briefly mentioned below:  
-**Spring Boot** – *Back-End Framework of Java*\
-**PostgreSQL** – *Local Database*\
-**Lombok and Builder Design Pattern**
+## Built With:
+- **Spring Boot** 
+- **PostgreSQL**
 
-### Project Structure
-The project is structured as follows:
-**Conceptual Model**
-**System Architecture Design (SAD)**
-**Detailed Design**
-**Code Implementation** 
+
+## Project implementation 
+The project has been designed & structured as follows:
+
+### Conceptual Model:
+
+![Fig 1- Modeli Konceptual](https://github.com/codewithaltin/job-application-system/assets/83029765/5b044f2d-cc87-4b0d-97d9-6a1ba60789ac)
+
+### System Architecture Design (SAD):
+- **Layers communication**:
+  
+ ![Fig 6- Paraqitja vizuale e moduleve](https://github.com/codewithaltin/job-application-system/assets/83029765/a7dc49f9-6f74-43f2-9b23-1488b4d807fb)
+
+- **Modules communications**:
+  
+![Fig 6- Paraqitja vizuale e moduleve](https://github.com/codewithaltin/job-application-system/assets/83029765/e912b905-807e-4cb7-9a30-68a7080f6f14)
+
+- **One of the modules in detail**:
+  
+![Fig 7- Moduli JAMM](https://github.com/codewithaltin/job-application-system/assets/83029765/76f2a183-c734-4b99-bc03-ca37682f9632)
+
+
+### Detailed Design:
+
+![Fig 12- Diagrami i detajuar JAMM](https://github.com/codewithaltin/job-application-system/assets/83029765/bc84541c-ca18-4f03-97d3-3cbae74e9554)
+
+## Code Implementation:
+
+We have used different design patterns & best principles including as follows:
+- Builder Pattern
+- DTO Pattern
+- Repository Pattern
+- Dependency injections
+- Data Mapper Patterns
+- SOLID Principles
+- DRY Principles
+
