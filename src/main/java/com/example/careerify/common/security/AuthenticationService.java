@@ -75,4 +75,25 @@ public class AuthenticationService {
                 .refreshToken(refreshToken)
                 .build();
     }
+
+    public JwtAuthenticationResponseDTO refreshToken(String refreshToken) {
+        UUID userId = jwtService.extractUserId(refreshToken);
+        if (jwtService.isRefreshTokenValid(refreshToken, userId)) {
+
+            User user = userRepository.findById(userId)
+                    .orElseThrow(() -> new IllegalArgumentException("Invalid refresh token."));
+
+            UserDetails userDetails = userService.userDetailsService().loadUserByUsername(user.getEmail());
+
+            String newAccessToken = jwtService.generateToken(userDetails, user.getId(), user.getRole());
+
+            return JwtAuthenticationResponseDTO.builder()
+                    .token(newAccessToken)
+                    .refreshToken(refreshToken) // Keep the same refresh token
+                    .build();
+        }
+        throw new IllegalArgumentException("Invalid refresh token.");
+    }
+
+
 }

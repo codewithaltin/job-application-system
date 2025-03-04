@@ -46,23 +46,33 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         jwt = authHeader.substring(7);
         if (StringUtils.isEmpty(jwt)) {
-            filterChain.doFilter(request, response);
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED); // Return 401 for empty token
             return;
         }
 
-        userEmail = jwtService.extractUserName(jwt);
-        if (StringUtils.isNotEmpty(userEmail) && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails = userService.userDetailsService().loadUserByUsername(userEmail);
-            if (jwtService.isTokenValid(jwt, userDetails)) {
-                UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                        userDetails, null, userDetails.getAuthorities());
-                authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                SecurityContext context = SecurityContextHolder.createEmptyContext();
-                context.setAuthentication(authToken);
-                SecurityContextHolder.setContext(context);
+        try {
+            userEmail = jwtService.extractUserName(jwt);
+            if (StringUtils.isNotEmpty(userEmail) && SecurityContextHolder.getContext().getAuthentication() == null) {
+                UserDetails userDetails = userService.userDetailsService().loadUserByUsername(userEmail);
+                if (jwtService.isTokenValid(jwt, userDetails)) {
+                    UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
+                            userDetails, null, userDetails.getAuthorities());
+                    authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                    SecurityContext context = SecurityContextHolder.createEmptyContext();
+                    context.setAuthentication(authToken);
+                    SecurityContextHolder.setContext(context);
+                } else {
+                    response.setStatus(HttpServletResponse.SC_UNAUTHORIZED); // Return 401 for invalid token
+                    return;
+                }
             }
+        } catch (Exception e) {
+            log.error("JWT authentication failed: {}", e.getMessage()); // Log the error
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED); // Return 401 if token processing fails
+            return;
         }
 
         filterChain.doFilter(request, response);
     }
+
 }
