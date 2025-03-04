@@ -28,7 +28,7 @@ public class ParentController {
     public Parent updateParent(@PathVariable Long id, @RequestBody Parent parentDetails) {
         Parent parent = parentRepository.findById(id).orElseThrow();
         parent.setName(parentDetails.getName());
-        parent.setDescription(parentDetails.getDescription());
+        parent.setLocation(parentDetails.getLocation());
         return parentRepository.save(parent);
     }
 

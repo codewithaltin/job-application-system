@@ -13,6 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Table(name="botuesi")
 public class Parent {
 
     @Id
@@ -20,7 +21,7 @@ public class Parent {
     private Long id;
 
     private String name;
-    private String description;
+    private String location;
     private boolean isDeleted = false;
 
     @JsonIgnore

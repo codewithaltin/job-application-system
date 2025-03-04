@@ -47,7 +47,6 @@ public class ChildController {
         }
 
         child.setName(childDetails.getName());
-        child.setDescription(childDetails.getDescription());
         return childRepository.save(child);
     }
 
@@ -59,7 +58,7 @@ public class ChildController {
     @PutMapping("/soft-delete/{id}")
     public Child softDeleteChild(@PathVariable Long id) {
         Child child = childRepository.findById(id).orElseThrow();
-        child.setDeleted(true);
+//        child.setDeleted(true);
         return childRepository.save(child);
     }
 }
